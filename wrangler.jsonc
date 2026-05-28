@@ -4,6 +4,15 @@
   "main": "./src/worker.ts",
   "compatibility_date": "2026-02-24",
   "compatibility_flags": ["nodejs_compat"],
+  "kv_namespaces": [
+    {
+      "binding": "SESSION",
+      "id": "be49f3ae1329426ebe7496bc289cfe53",
+    },
+  ],
+  "images": {
+    "binding": "IMAGES",
+  },
   "d1_databases": [
     {
       "binding": "DB",
@@ -18,10 +27,10 @@
       "preview_bucket_name": "my-emdash-media",
     },
   ],
-  // Worker Loader for plugin sandboxing
-  "worker_loaders": [
-    {
-      "binding": "LOADER",
-    },
-  ],
+  // Workers Paid — Dynamic Workers for plugin sandboxing:
+  // "worker_loaders": [
+  //   {
+  //     "binding": "LOADER",
+  //   },
+  // ],
 }
