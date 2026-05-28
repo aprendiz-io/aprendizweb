@@ -12,23 +12,23 @@ import emdash, { local } from "emdash/astro";
 import { sqlite } from "emdash/db";
 
 export default defineConfig({
-	output: "server",
-	adapter: node({ mode: "standalone" }),
-	image: {
-		layout: "constrained",
-		responsiveStyles: true,
-	},
-	integrations: [
-		react(),
-		emdash({
-			database: sqlite({ url: "file:./data.db" }),
-			storage: local({
-				directory: "./uploads",
-				baseUrl: "/_emdash/api/media/file",
-			}),
-		}),
-	],
-	devToolbar: { enabled: false },
+  output: "server",
+  adapter: node({ mode: "standalone" }),
+  image: {
+    layout: "constrained",
+    responsiveStyles: true,
+  },
+  integrations: [
+    react(),
+    emdash({
+      database: sqlite({ url: "file:./data.db" }),
+      storage: local({
+        directory: "./uploads",
+        baseUrl: "/_emdash/api/media/file",
+      }),
+    }),
+  ],
+  devToolbar: { enabled: false },
 });
 ```
 
@@ -42,8 +42,8 @@ When behind a TLS-terminating reverse proxy, `Astro.url` returns the internal ad
 
 ```javascript
 emdash({
-	siteUrl: "https://mysite.example.com",
-	// ...
+  siteUrl: "https://mysite.example.com",
+  // ...
 });
 ```
 
@@ -68,20 +68,20 @@ import { defineConfig } from "astro/config";
 import emdash from "emdash/astro";
 
 export default defineConfig({
-	output: "server",
-	adapter: cloudflare(),
-	image: {
-		layout: "constrained",
-		responsiveStyles: true,
-	},
-	integrations: [
-		react(),
-		emdash({
-			database: d1({ binding: "DB", session: "auto" }),
-			storage: r2({ binding: "MEDIA" }),
-		}),
-	],
-	devToolbar: { enabled: false },
+  output: "server",
+  adapter: cloudflare(),
+  image: {
+    layout: "constrained",
+    responsiveStyles: true,
+  },
+  integrations: [
+    react(),
+    emdash({
+      database: d1({ binding: "DB", session: "auto" }),
+      storage: r2({ binding: "MEDIA" }),
+    }),
+  ],
+  devToolbar: { enabled: false },
 });
 ```
 
@@ -89,22 +89,22 @@ Requires a `wrangler.jsonc` with D1 and R2 bindings:
 
 ```jsonc
 {
-	"name": "my-site",
-	"compatibility_date": "2026-02-24",
-	"compatibility_flags": ["nodejs_compat"],
-	"assets": { "directory": "./dist" },
-	"d1_databases": [
-		{
-			"binding": "DB",
-			"database_name": "my-site",
-		},
-	],
-	"r2_buckets": [
-		{
-			"binding": "MEDIA",
-			"bucket_name": "my-site-media",
-		},
-	],
+  "name": "my-site",
+  "compatibility_date": "2026-02-24",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": { "directory": "./dist" },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "my-site",
+    },
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "my-site-media",
+    },
+  ],
 }
 ```
 
@@ -131,7 +131,7 @@ import { defineLiveCollection } from "astro:content";
 import { emdashLoader } from "emdash/runtime";
 
 export const collections = {
-	_emdash: defineLiveCollection({ loader: emdashLoader() }),
+  _emdash: defineLiveCollection({ loader: emdashLoader() }),
 };
 ```
 
@@ -147,28 +147,28 @@ Auto-generated at the project root when the dev server starts. Provides TypeScri
 import type { PortableTextBlock } from "emdash";
 
 export interface Post {
-	id: string;
-	slug: string | null;
-	status: string;
-	title: string;
-	featured_image?: {
-		id: string;
-		src?: string;
-		alt?: string;
-		width?: number;
-		height?: number;
-	};
-	content?: PortableTextBlock[];
-	excerpt?: string;
-	createdAt: Date;
-	updatedAt: Date;
-	publishedAt: Date | null;
+  id: string;
+  slug: string | null;
+  status: string;
+  title: string;
+  featured_image?: {
+    id: string;
+    src?: string;
+    alt?: string;
+    width?: number;
+    height?: number;
+  };
+  content?: PortableTextBlock[];
+  excerpt?: string;
+  createdAt: Date;
+  updatedAt: Date;
+  publishedAt: Date | null;
 }
 
 declare module "emdash" {
-	interface EmDashCollections {
-		posts: Post;
-	}
+  interface EmDashCollections {
+    posts: Post;
+  }
 }
 ```
 
@@ -178,13 +178,13 @@ The dev server regenerates this file automatically when schema changes. You can 
 
 ```bash
 # From local dev server (writes emdash-env.d.ts at project root)
-npx emdash types
+pnpm exec emdash types
 
 # From remote instance
-npx emdash types --url https://my-site.pages.dev
+pnpm exec emdash types --url https://my-site.pages.dev
 
 # Custom output path
-npx emdash types --output src/types/cms.ts
+pnpm exec emdash types --output src/types/cms.ts
 ```
 
 The CLI also writes `.emdash/schema.json` with the raw schema for tooling.
@@ -195,14 +195,14 @@ Key dependencies for a Node.js site:
 
 ```json
 {
-	"dependencies": {
-		"astro": "^6.0.0",
-		"emdash": "workspace:*",
-		"@astrojs/node": "^9.0.0",
-		"@astrojs/react": "^4.0.0",
-		"react": "^18.0.0",
-		"react-dom": "^18.0.0"
-	}
+  "dependencies": {
+    "astro": "^6.0.0",
+    "emdash": "workspace:*",
+    "@astrojs/node": "^9.0.0",
+    "@astrojs/react": "^4.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  }
 }
 ```
 
@@ -211,8 +211,8 @@ For Cloudflare, replace `@astrojs/node` with `@astrojs/cloudflare` and add `@emd
 ## Dev Server
 
 ```bash
-npx emdash dev              # Start dev server (runs migrations, applies seed)
-npx emdash dev --types      # Start and generate types from schema
+pnpm exec emdash dev              # Start dev server (runs migrations, applies seed)
+pnpm exec emdash dev --types      # Start and generate types from schema
 ```
 
 The admin UI is at `http://localhost:4321/_emdash/admin`. On first run, you'll go through setup to create an admin account.

@@ -7,7 +7,8 @@
     "seed": "seed/seed.json"
   },
   "scripts": {
-    "dev": "astro dev",
+    "dev": "emdash dev",
+    "types": "emdash types",
     "build": "astro build",
     "preview": "astro preview",
     "deploy": "astro build && wrangler deploy",

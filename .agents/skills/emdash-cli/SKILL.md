@@ -5,6 +5,14 @@ description: Use the EmDash CLI to manage content, schema, media, and more. Use 
 
 # EmDash CLI
 
+This project uses **pnpm 11**. Prefer `pnpm dev` and `pnpm types` when available; use `pnpm exec emdash <command>` for all other CLI invocations.
+
+## Agent safety (deploy & remote)
+
+- Routine work: local only (`pnpm dev`, `pnpm exec emdash types` against localhost).
+- **Deploy:** never run `pnpm deploy` / `wrangler deploy` unless the user asked. When they do, confirm target + commands and wait for explicit approval before executing.
+- **Remote CLI:** do not `emdash login --url <production>` or mutate remote content/schema unless the user explicitly requested it and confirmed the URL.
+
 The EmDash CLI (`emdash` or `ec`) manages EmDash CMS instances. Commands fall into two categories:
 
 - **Local commands** — work directly on a SQLite file, no running server needed: `init`, `dev`, `seed`, `export-seed`, `auth secret`
@@ -29,17 +37,17 @@ Sites behind Cloudflare Access or other reverse proxies need auth headers on eve
 
 ```bash
 # Single header
-npx emdash login --url https://my-site.pages.dev \
+pnpm exec emdash login --url https://my-site.pages.dev \
   --header "CF-Access-Client-Id: xxx.access" \
   --header "CF-Access-Client-Secret: yyy"
 
 # Short form
-npx emdash login -H "CF-Access-Client-Id: xxx" -H "CF-Access-Client-Secret: yyy"
+pnpm exec emdash login -H "CF-Access-Client-Id: xxx" -H "CF-Access-Client-Secret: yyy"
 
 # Via environment (newline-separated)
 export EMDASH_HEADERS="CF-Access-Client-Id: xxx
 CF-Access-Client-Secret: yyy"
-npx emdash login --url https://my-site.pages.dev
+pnpm exec emdash login --url https://my-site.pages.dev
 ```
 
 Headers are persisted to `~/.config/emdash/auth.json` after login, so subsequent commands inherit them automatically.
@@ -60,10 +68,10 @@ The `--header` flag works with any auth scheme:
 
 ```bash
 # Basic auth
-npx emdash login --url https://example.com -H "Authorization: Basic dXNlcjpwYXNz"
+pnpm exec emdash login --url https://example.com -H "Authorization: Basic dXNlcjpwYXNz"
 
 # Custom auth header
-npx emdash login --url https://example.com -H "X-API-Key: secret123"
+pnpm exec emdash login --url https://example.com -H "X-API-Key: secret123"
 ```
 
 ## Quick Reference
@@ -74,30 +82,30 @@ Migrations and seed application happen automatically inside the runtime — ther
 
 ```bash
 # Start dev server (runs migrations, applies seed on empty DB, starts Astro)
-npx emdash dev
+pnpm exec emdash dev
 
 # Start dev server and generate types from remote
-npx emdash dev --types
+pnpm exec emdash dev --types
 
 # Export an existing database as a seed file
 # (the runtime auto-discovers .emdash/seed.json on first boot;
 # `mkdir -p` because the directory may not exist yet)
 mkdir -p .emdash
-npx emdash export-seed > .emdash/seed.json
-npx emdash export-seed --with-content > .emdash/seed.json
+pnpm exec emdash export-seed > .emdash/seed.json
+pnpm exec emdash export-seed --with-content > .emdash/seed.json
 ```
 
 ### Type Generation
 
 ```bash
 # Generate types from local dev server
-npx emdash types
+pnpm exec emdash types
 
 # Generate from remote
-npx emdash types --url https://my-site.pages.dev
+pnpm exec emdash types --url https://my-site.pages.dev
 
 # Custom output path
-npx emdash types --output src/types/cms.ts
+pnpm exec emdash types --output src/types/cms.ts
 ```
 
 Writes `.emdash/types.ts` (TypeScript interfaces) and `.emdash/schema.json`.
@@ -106,16 +114,16 @@ Writes `.emdash/types.ts` (TypeScript interfaces) and `.emdash/schema.json`.
 
 ```bash
 # Login (OAuth Device Flow)
-npx emdash login --url https://my-site.pages.dev
+pnpm exec emdash login --url https://my-site.pages.dev
 
 # Check current user
-npx emdash whoami
+pnpm exec emdash whoami
 
 # Logout
-npx emdash logout
+pnpm exec emdash logout
 
 # Generate auth secret for deployment
-npx emdash auth secret
+pnpm exec emdash auth secret
 ```
 
 ### Content CRUD
@@ -124,56 +132,56 @@ The CLI is designed for agents. Create and update auto-publish by default so age
 
 ```bash
 # List content
-npx emdash content list posts
-npx emdash content list posts --status published --limit 10
+pnpm exec emdash content list posts
+pnpm exec emdash content list posts --status published --limit 10
 
 # Get a single item (Portable Text fields converted to markdown)
 # Returns draft data if a pending draft exists
-npx emdash content get posts 01ABC123
-npx emdash content get posts 01ABC123 --raw        # skip PT->markdown conversion
-npx emdash content get posts 01ABC123 --published   # ignore pending drafts
+pnpm exec emdash content get posts 01ABC123
+pnpm exec emdash content get posts 01ABC123 --raw        # skip PT->markdown conversion
+pnpm exec emdash content get posts 01ABC123 --published   # ignore pending drafts
 
 # Create content (auto-publishes by default)
-npx emdash content create posts --data '{"title": "Hello", "body": "# World"}'
-npx emdash content create posts --file post.json --slug hello-world
-npx emdash content create posts --draft --data '...'  # keep as draft
-cat post.json | npx emdash content create posts --stdin
+pnpm exec emdash content create posts --data '{"title": "Hello", "body": "# World"}'
+pnpm exec emdash content create posts --file post.json --slug hello-world
+pnpm exec emdash content create posts --draft --data '...'  # keep as draft
+cat post.json | pnpm exec emdash content create posts --stdin
 
 # Update (requires --rev from a prior get, auto-publishes by default)
-npx emdash content update posts 01ABC123 --rev MToyMDI2... --data '{"title": "Updated"}'
-npx emdash content update posts 01ABC123 --rev MToyMDI2... --draft --data '...'  # keep as draft
+pnpm exec emdash content update posts 01ABC123 --rev MToyMDI2... --data '{"title": "Updated"}'
+pnpm exec emdash content update posts 01ABC123 --rev MToyMDI2... --draft --data '...'  # keep as draft
 
 # Delete (soft delete)
-npx emdash content delete posts 01ABC123
+pnpm exec emdash content delete posts 01ABC123
 
 # Lifecycle
-npx emdash content publish posts 01ABC123
-npx emdash content unpublish posts 01ABC123
-npx emdash content schedule posts 01ABC123 --at 2026-03-01T09:00:00Z
-npx emdash content restore posts 01ABC123
+pnpm exec emdash content publish posts 01ABC123
+pnpm exec emdash content unpublish posts 01ABC123
+pnpm exec emdash content schedule posts 01ABC123 --at 2026-03-01T09:00:00Z
+pnpm exec emdash content restore posts 01ABC123
 ```
 
 ### Schema Management
 
 ```bash
 # List collections
-npx emdash schema list
+pnpm exec emdash schema list
 
 # Get collection with fields
-npx emdash schema get posts
+pnpm exec emdash schema get posts
 
 # Create collection
-npx emdash schema create articles --label Articles --description "Blog articles"
+pnpm exec emdash schema create articles --label Articles --description "Blog articles"
 
 # Delete collection
-npx emdash schema delete articles --force
+pnpm exec emdash schema delete articles --force
 
 # Add field
-npx emdash schema add-field posts body --type portableText --label "Body Content"
-npx emdash schema add-field posts featured --type boolean --required
+pnpm exec emdash schema add-field posts body --type portableText --label "Body Content"
+pnpm exec emdash schema add-field posts featured --type boolean --required
 
 # Remove field
-npx emdash schema remove-field posts featured
+pnpm exec emdash schema remove-field posts featured
 ```
 
 Field types: `string`, `text`, `number`, `integer`, `boolean`, `datetime`, `select`, `multiSelect`, `image`, `file`, `reference`, `portableText`, `json`, `slug`, `url`. See `FIELD_TYPE_TO_COLUMN` in `packages/core/src/schema/types.ts` for the authoritative list.
@@ -182,38 +190,38 @@ Field types: `string`, `text`, `number`, `integer`, `boolean`, `datetime`, `sele
 
 ```bash
 # List media
-npx emdash media list
-npx emdash media list --mime image/png
+pnpm exec emdash media list
+pnpm exec emdash media list --mime image/png
 
 # Upload
-npx emdash media upload ./photo.jpg --alt "A sunset" --caption "Bristol, 2026"
+pnpm exec emdash media upload ./photo.jpg --alt "A sunset" --caption "Bristol, 2026"
 
 # Get / delete
-npx emdash media get 01MEDIA123
-npx emdash media delete 01MEDIA123
+pnpm exec emdash media get 01MEDIA123
+pnpm exec emdash media delete 01MEDIA123
 ```
 
 ### Search
 
 ```bash
-npx emdash search "hello world"
-npx emdash search "hello" --collection posts --limit 5
+pnpm exec emdash search "hello world"
+pnpm exec emdash search "hello" --collection posts --limit 5
 ```
 
 ### Taxonomies
 
 ```bash
-npx emdash taxonomy list
-npx emdash taxonomy terms categories
-npx emdash taxonomy add-term categories --name "Tech" --slug tech
-npx emdash taxonomy add-term categories --name "Frontend" --parent 01PARENT123
+pnpm exec emdash taxonomy list
+pnpm exec emdash taxonomy terms categories
+pnpm exec emdash taxonomy add-term categories --name "Tech" --slug tech
+pnpm exec emdash taxonomy add-term categories --name "Frontend" --parent 01PARENT123
 ```
 
 ### Menus
 
 ```bash
-npx emdash menu list
-npx emdash menu get primary
+pnpm exec emdash menu list
+pnpm exec emdash menu get primary
 ```
 
 ## Drafts and Publishing
@@ -234,10 +242,10 @@ All remote commands support `--json` for machine-readable output. It's auto-enab
 
 ```bash
 # Pipe to jq
-npx emdash content list posts --json | jq '.items[].slug'
+pnpm exec emdash content list posts --json | jq '.items[].slug'
 
 # Use in scripts
-ID=$(npx emdash content create posts --data '{"title":"Hello"}' --json | jq -r '.id')
+ID=$(pnpm exec emdash content create posts --data '{"title":"Hello"}' --json | jq -r '.id')
 ```
 
 ## Editing Flow
