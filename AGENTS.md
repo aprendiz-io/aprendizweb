@@ -3,8 +3,9 @@ This is an EmDash site -- a CMS built on Astro with a full admin UI.
 ## Commands
 
 ```bash
-npx emdash dev        # Start dev server (runs migrations, seeds, generates types)
-npx emdash types      # Regenerate TypeScript types from schema
+pnpm install          # Install dependencies
+pnpm dev              # Start dev server (runs migrations, seeds, generates types)
+pnpm types            # Regenerate TypeScript types from schema
 ```
 
 The admin UI is at `http://localhost:4321/_emdash/admin`.
@@ -41,6 +42,17 @@ This template ships with `.mcp.json`, `.cursor/mcp.json`, and `.vscode/mcp.json`
 - `entry.id` is the slug (for URLs). `entry.data.id` is the database ULID (for API calls like `getEntryTerms`).
 - Always call `Astro.cache.set(cacheHint)` on pages that query content.
 - Taxonomy names in queries must match the seed's `"name"` field exactly (e.g., `"category"` not `"categories"`).
+
+## Deployment
+
+- Never run `pnpm deploy`, `wrangler deploy`, `wrangler publish`, or any command that publishes to Cloudflare/production unless the user explicitly asks.
+- Default to local development (`pnpm dev`). Do not `emdash login` against production URLs unless the user requests remote CMS operations.
+- **When the user requests a deploy**, stop and confirm before running anything:
+  1. Restate the target (e.g. production Worker, D1/R2 bindings in `wrangler.jsonc`).
+  2. List the exact commands you plan to run (typically `pnpm deploy` or `astro build && wrangler deploy`).
+  3. Ask the user to confirm explicitly (e.g. "yes, deploy" or "proceed").
+- Do not execute deploy commands until the user confirms. If anything is ambiguous (staging vs production, branch, secrets), ask first.
+- Do not modify `wrangler.jsonc` bindings or Cloudflare resource IDs as part of a deploy unless the user explicitly requests it.
 
 ## This Template
 

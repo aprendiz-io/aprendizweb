@@ -64,7 +64,7 @@ Write `seed/seed.json` with collections, fields, taxonomies, menus, widgets, and
 ### 6. Run and verify
 
 ```bash
-npx emdash dev          # Start dev server (runs migrations + seeds, and generates types)
+pnpm dev              # Start dev server (runs migrations + seeds, and generates types)
 ```
 
 The admin UI is at `http://localhost:4321/_emdash/admin`.
@@ -75,24 +75,24 @@ The admin UI is at `http://localhost:4321/_emdash/admin`.
 // Content (entries have .data.byline and .data.bylines eagerly loaded)
 import { getEmDashCollection, getEmDashEntry } from "emdash";
 const { entries, nextCursor, cacheHint } = await getEmDashCollection("posts", {
-	limit: 10,
-	cursor,
-	orderBy: { published_at: "desc" },
+  limit: 10,
+  cursor,
+  orderBy: { published_at: "desc" },
 });
 const { entry: post, cacheHint } = await getEmDashEntry("posts", slug);
 
 // Site features
 import {
-	getSiteSettings,
-	getMenu,
-	getTaxonomyTerms,
-	getTerm,
-	getEntryTerms,
-	getEntriesByTerm,
-	getWidgetArea,
-	search,
-	getSection,
-	getSeoMeta,
+  getSiteSettings,
+  getMenu,
+  getTaxonomyTerms,
+  getTerm,
+  getEntryTerms,
+  getEntriesByTerm,
+  getWidgetArea,
+  search,
+  getSection,
+  getSeoMeta,
 } from "emdash";
 
 // Bylines (standalone queries -- usually not needed since entries have bylines attached)
@@ -100,14 +100,14 @@ import { getByline, getBylineBySlug } from "emdash";
 
 // UI components
 import {
-	PortableText,
-	Image,
-	Comments,
-	CommentForm,
-	WidgetArea,
-	EmDashHead,
-	EmDashBodyStart,
-	EmDashBodyEnd,
+  PortableText,
+  Image,
+  Comments,
+  CommentForm,
+  WidgetArea,
+  EmDashHead,
+  EmDashBodyStart,
+  EmDashBodyEnd,
 } from "emdash/ui";
 import LiveSearch from "emdash/ui/search";
 
