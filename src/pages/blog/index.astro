@@ -1,0 +1,55 @@
+---
+import { getEmDashCollection, getTermsForEntries } from "emdash";
+import Aprendiz from "../../layouts/Aprendiz.astro";
+import BlogPostCard from "../../components/BlogPostCard.astro";
+import BlogIntro from "../../components/BlogIntro.astro";
+import RotatingText from "../../components/RotatingText.astro";
+import { getLocaleFromAstro, getMessages } from "../../i18n";
+
+const locale = getLocaleFromAstro(Astro.currentLocale, Astro.url.hostname);
+const m = getMessages(locale);
+
+const { entries: posts, cacheHint } = await getEmDashCollection("posts", {
+	orderBy: { published_at: "desc" },
+	limit: 12,
+	locale,
+});
+
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+
+const tagEntryIds = posts.map((p) => p.data.id);
+const categoriesByEntry = await getTermsForEntries("posts", tagEntryIds, "category");
+
+function categoryLabel(entryId: string): string {
+	const terms = categoriesByEntry.get(entryId) ?? [];
+	return terms[0]?.label ?? "";
+}
+---
+
+<Aprendiz title={m.blog.metaTitle}>
+	<section class="section">
+		<div class="container text-center">
+			<RotatingText prefix={m.blog.heroPrefix} words={m.blog.words} />
+			<BlogIntro text={m.blog.intro} />
+		</div>
+	</section>
+
+	<section class="section section-alt">
+		<div class="container">
+			<h2 class="heading-2 text-center">{m.blog.listTitle}</h2>
+			<div class="grid-3" style="margin-top: 2rem;">
+				{
+					posts.map((post) => (
+						<BlogPostCard
+							href={`/blog-posts/${post.id}`}
+							category={categoryLabel(post.data.id)}
+							title={post.data.title}
+							featuredImage={post.data.featured_image}
+							readMore={m.blog.readMore}
+						/>
+					))
+				}
+			</div>
+		</div>
+	</section>
+</Aprendiz>

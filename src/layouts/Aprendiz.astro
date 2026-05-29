@@ -1,0 +1,51 @@
+---
+import { EmDashHead, EmDashBodyStart, EmDashBodyEnd } from "emdash/ui";
+import { createPublicPageContext } from "emdash/page";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import { getLocaleFromAstro, getMessages } from "../i18n";
+import "../styles/fonts.css";
+import "../styles/theme.css";
+import "../styles/aprendiz.css";
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description } = Astro.props;
+const locale = getLocaleFromAstro(Astro.currentLocale, Astro.url.hostname);
+const messages = getMessages(locale);
+const fullTitle = title.includes("aprendiz") ? title : `${title} — aprendiz`;
+const metaDescription = description ?? messages.meta.siteDescription;
+
+const pageCtx = createPublicPageContext({
+	request: Astro.request,
+	url: Astro.url,
+	seo: {
+		title: fullTitle,
+		description: metaDescription,
+	},
+});
+---
+
+<!doctype html>
+<html lang={locale}>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" href="/images/aprendiz/favicon.png" type="image/png" />
+		<EmDashHead page={pageCtx} />
+		<title>{fullTitle}</title>
+		<meta name="description" content={metaDescription} />
+	</head>
+	<body>
+		<EmDashBodyStart page={pageCtx} />
+		<SiteHeader messages={messages} />
+		<main>
+			<slot />
+		</main>
+		<SiteFooter messages={messages} />
+		<EmDashBodyEnd page={pageCtx} />
+	</body>
+</html>

@@ -1,0 +1,41 @@
+---
+import { getEmDashEntry } from "emdash";
+import { Image, PortableText } from "emdash/ui";
+import Aprendiz from "../../layouts/Aprendiz.astro";
+import { getLocaleFromAstro } from "../../i18n";
+
+const locale = getLocaleFromAstro(Astro.currentLocale, Astro.url.hostname);
+const { slug } = Astro.params;
+
+if (!slug) {
+	return Astro.redirect("/blog");
+}
+
+const { entry: post, cacheHint } = await getEmDashEntry("posts", slug, { locale });
+
+if (!post) {
+	return Astro.redirect("/404");
+}
+
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+---
+
+<Aprendiz title={post.data.title} description={post.data.excerpt ?? undefined}>
+	<article>
+		<header class="article-header container">
+			<h1 class="heading-1">{post.data.title}</h1>
+		</header>
+		<div class="container">
+			{
+				post.data.featured_image && (
+					<div class="article-featured">
+						<Image image={post.data.featured_image} class="blog-card-image" />
+					</div>
+				)
+			}
+			<div class="article-body prose">
+				<PortableText value={post.data.content} />
+			</div>
+		</div>
+	</article>
+</Aprendiz>

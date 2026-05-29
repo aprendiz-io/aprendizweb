@@ -1,0 +1,27 @@
+---
+import type { Messages } from "../i18n";
+
+interface Props {
+	messages: Messages;
+}
+
+const { messages } = Astro.props;
+const contactPath = messages.paths.contact;
+---
+
+<header class="site-header">
+	<div class="container header-inner">
+		<div class="header-start">
+			<a href="/" class="logo">
+				<img src="/images/aprendiz/logo.svg" alt="aprendiz" width="140" height="36" />
+			</a>
+			<nav class="header-nav" aria-label="Main">
+				<a href="/blog">{messages.nav.blog}</a>
+				<a href={contactPath}>{messages.nav.contact}</a>
+			</nav>
+		</div>
+		<div class="header-actions">
+			<a href={contactPath} class="btn">{messages.nav.cta}</a>
+		</div>
+	</div>
+</header>

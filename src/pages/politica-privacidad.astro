@@ -1,22 +1,14 @@
 ---
 import { getEmDashEntry } from "emdash";
 import { PortableText } from "emdash/ui";
-import Aprendiz from "../../layouts/Aprendiz.astro";
-import { getLocaleFromAstro } from "../../i18n";
+import Aprendiz from "../layouts/Aprendiz.astro";
+import { getLocaleFromAstro } from "../i18n";
 
 const locale = getLocaleFromAstro(Astro.currentLocale, Astro.url.hostname);
-const { slug } = Astro.params;
-
-if (!slug) {
-	return Astro.redirect("/");
-}
+const slug = locale === "en" ? "privacy-policy" : "politica-privacidad";
 
 const { entry: page, cacheHint } = await getEmDashEntry("pages", slug, { locale });
-
-if (!page) {
-	return Astro.redirect("/404");
-}
-
+if (!page) return Astro.redirect("/404");
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 ---
 

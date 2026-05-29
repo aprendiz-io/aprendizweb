@@ -1,108 +1,48 @@
-/*
-  theme.css -- override any :root variable here to retheme the blog.
-
-  This is the only file you need to edit to customize the site's visual
-  appearance. All defaults are listed below as comments. Uncomment and
-  change any value to override it.
-
-  Base.astro puts its defaults inside @layer base, so declarations here
-  (which are unlayered) always take priority -- no specificity tricks needed.
-
-  Note: this template defines explicit dark mode colors in Base.astro.
-  Overriding light-mode --color-* variables here won't affect dark mode.
-  To customize dark mode, also override --color-* variables inside a
-  @media (prefers-color-scheme: dark) block and/or in the :root.dark rule.
-*/
+/* aprendiz brand tokens — extracted from Webflow published CSS */
 
 :root {
-	/* --- Colors ---
-	--color-bg: #ffffff;
-	--color-bg-subtle: #fafafa;
-	--color-text: #1a1a1a;
-	--color-text-secondary: #525252;
-	--color-muted: #8b8b8b;
-	--color-border: #e5e5e5;
-	--color-border-subtle: #f0f0f0;
-	--color-surface: #f7f7f7;
-	--color-accent: #0066cc;
-	--color-accent-hover: #0052a3;
-	--color-on-accent: white;
-	--color-accent-ring: color-mix(in srgb, var(--color-accent) 25%, transparent);
-	*/
+	--color-bg: #fdfdfb;
+	--color-bg-subtle: #f9f9f1;
+	--color-surface: #ffffff;
+	--color-text: #0b0707;
+	--color-text-secondary: #575757;
+	--color-muted: #575757;
+	--color-accent: #194153;
+	--color-accent-hover: #13313e;
+	--color-on-accent: #ffffff;
+	--color-border: #e6e6e6;
+	--color-border-subtle: #f0f0eb;
 
-	/* --- Type scale ---
-	--font-size-xs: 0.8125rem;
-	--font-size-sm: 0.875rem;
-	--font-size-base: 1rem;
-	--font-size-lg: 1.125rem;
-	--font-size-xl: 1.25rem;
-	--font-size-2xl: 1.5rem;
-	--font-size-3xl: 2rem;
-	--font-size-4xl: 2.5rem;
-	--font-size-5xl: 3.5rem;
-	*/
+	--font-sans: "Aeonik", system-ui, sans-serif;
 
-	/* --- Line heights ---
-	--leading-tight: 1.15;
-	--leading-snug: 1.3;
-	--leading-normal: 1.5;
-	--leading-relaxed: 1.7;
-	*/
+	/* Typography scale — Aeonik style guide */
+	--font-display: clamp(2.75rem, 6vw, 5rem); /* 80px */
+	--font-h1: clamp(2.25rem, 5vw, 4rem); /* 64px */
+	--font-h2: clamp(1.75rem, 4vw, 3rem); /* 48px */
+	--font-h3: clamp(1.375rem, 3vw, 2rem); /* 32px */
+	--font-h4: clamp(1.125rem, 2vw, 1.5rem); /* 24px */
+	--font-body-lg: 1.25rem; /* 20px */
+	--font-body: 1.125rem; /* 18px — default */
+	--font-body-sm: 1rem; /* 16px */
+	--font-body-xs: 0.875rem; /* 14px */
+	--leading-display: 1.1;
+	--leading-heading: 1.2;
+	--leading-h4: 1.4;
+	--leading-body: 1.5;
 
-	/* --- Letter spacing ---
-	--tracking-tight: -0.03em;    used on h1 and large titles
-	--tracking-snug: -0.02em;     used on h2–h6, site/card titles
-	--tracking-wide: 0.06em;      used on meta labels, TOC/widget titles
-	--tracking-wider: 0.08em;     used on footer headings, section labels
-	*/
+	--content-width: 720px;
+	--wide-width: 1140px;
+	--section-padding: clamp(3rem, 6vw, 5rem);
 
-	/* --- Spacing ---
-	--spacing-1: 0.25rem;
-	--spacing-2: 0.5rem;
-	--spacing-3: 0.75rem;
-	--spacing-4: 1rem;
-	--spacing-5: 1.25rem;
-	--spacing-6: 1.5rem;
-	--spacing-8: 2rem;
-	--spacing-10: 2.5rem;
-	--spacing-12: 3rem;
-	--spacing-16: 4rem;
-	--spacing-20: 5rem;
-	--spacing-24: 6rem;
-	*/
+	--radius-sm: 8px;
+	--radius-md: 12px;
+	--radius-lg: 20px;
+	--radius-full: 999px;
 
-	/* --- Layout ---
-	--content-width: 680px;       article/page body column width
-	--wide-width: 1200px;         max container width (home, archives)
-	--gutter-width: 200px;        right sidebar column (TOC) on article pages
-	--meta-col-width: 180px;      left meta column on article pages
-	--nav-height: 64px;           sticky header height
-	--search-input-width: 180px;  nav search box width
-	*/
+	--shadow-card: 0 4px 24px rgba(11, 7, 7, 0.06);
+}
 
-	/* --- Borders & radius ---
-	--radius: 4px;
-	--radius-lg: 8px;
-	*/
-
-	/* --- Transitions ---
-	--transition-fast: 120ms ease;
-	--transition-base: 180ms ease;
-	*/
-
-	/* --- Avatars ---
-	--avatar-size-xs: 18px;    card byline avatars
-	--avatar-size-sm: 20px;    post list byline avatars
-	--avatar-size-md: 24px;    featured post byline avatars
-	--avatar-size-lg: 32px;    single post byline avatars
-	*/
-
-	/* --- Shadows ---
-	--shadow-dropdown: 0 8px 30px rgba(0, 0, 0, 0.12);
-	--shadow-btn-active: 0 1px 2px rgba(0, 0, 0, 0.05);
-	*/
-
-	/* --- Misc ---
-	--tag-padding-y: 2px;    vertical padding on tag pills
-	*/
+/* aprendiz Webflow site is light-only — ignore OS dark mode */
+html {
+	color-scheme: light;
 }

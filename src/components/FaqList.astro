@@ -1,0 +1,36 @@
+---
+interface FaqItem {
+	q: string;
+	a: string;
+}
+
+interface Props {
+	items: readonly FaqItem[];
+	columns?: 1 | 2;
+}
+
+const { items, columns = 1 } = Astro.props;
+
+const midpoint = Math.ceil(items.length / 2);
+const columnsData =
+	columns === 2
+		? [items.slice(0, midpoint), items.slice(midpoint)]
+		: [items];
+---
+
+<div class={`faq-grid${columns === 2 ? " faq-grid--two-col" : ""}`}>
+	{
+		columnsData.map((columnItems) => (
+			<div class="faq-list">
+				{columnItems.map((item) => (
+					<details class="faq-item">
+						<summary>{item.q}</summary>
+						<div class="faq-answer">
+							<p>{item.a}</p>
+						</div>
+					</details>
+				))}
+			</div>
+		))
+	}
+</div>
