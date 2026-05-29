@@ -1,0 +1,30 @@
+---
+import type { Messages } from "../i18n";
+
+interface Props {
+	messages: Messages;
+}
+
+const { messages: m } = Astro.props;
+---
+
+<form class="contact-form" action="#" method="post" onsubmit="return false;">
+	<label>
+		{m.contact.formName}
+		<input type="text" name="name" autocomplete="name" />
+	</label>
+	<label>
+		{m.contact.formEmail}
+		<input type="email" name="email" autocomplete="email" />
+	</label>
+	<label>
+		{m.contact.formInstitution}
+		<input type="text" name="institution" autocomplete="organization" />
+	</label>
+	<label>
+		{m.contact.formMessage}
+		<textarea name="message"></textarea>
+	</label>
+	<button type="submit" class="btn">{m.contact.formSubmit}</button>
+	<p class="form-note">{m.contact.formNote}</p>
+</form>

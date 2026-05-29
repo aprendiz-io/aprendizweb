@@ -1,0 +1,31 @@
+---
+interface Props {
+	text: string;
+}
+
+const { text } = Astro.props;
+
+/** Split into lines after `.` or `;`, then bold every "aprendiz". */
+function formatIntro(raw: string): string[] {
+	return raw
+		.split(/(?<=[.;])\s+/)
+		.map((segment) => segment.trim())
+		.filter(Boolean)
+		.map((segment) =>
+			segment.replace(/\b(aprendiz)\b/gi, "<strong>$1</strong>"),
+		);
+}
+
+const lines = formatIntro(text);
+---
+
+<p class="muted blog-intro">
+	{
+		lines.map((line, i) => (
+			<>
+				{i > 0 && <br />}
+				<span set:html={line} />
+			</>
+		))
+	}
+</p>

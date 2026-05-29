@@ -1,0 +1,112 @@
+---
+interface Props {
+	prefix: string;
+	words: readonly string[];
+}
+
+const { prefix, words } = Astro.props;
+const loopWords = [...words, words[0]!];
+---
+
+<div class="rotating-hero">
+	<h1 class="rotating-hero-prefix">{prefix}</h1>
+	<div class="rotating-text" aria-live="polite">
+		<div class="rotating-text-track" style={`--word-count: ${words.length}`}>
+			{
+				loopWords.map((word) => (
+					<span class="rotating-text-word">{word}</span>
+				))
+			}
+		</div>
+	</div>
+</div>
+
+<style>
+	.rotating-hero {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: 0.35rem 0.75rem;
+	}
+
+	.rotating-hero-prefix {
+		font-size: clamp(1.75rem, 4vw, 2.5rem);
+		font-weight: 700;
+		margin: 0;
+		line-height: 1.2;
+	}
+
+	.rotating-text {
+		height: 1.2em;
+		overflow: hidden;
+		font-size: clamp(1.75rem, 4vw, 2.5rem);
+		font-weight: 700;
+		line-height: 1.2;
+		color: var(--color-accent);
+	}
+
+	.rotating-text-track {
+		display: flex;
+		flex-direction: column;
+		animation: rotate-words calc(var(--word-count) * 2.5s) ease-in-out infinite;
+	}
+
+	.rotating-text-word {
+		height: 1.2em;
+		display: flex;
+		align-items: center;
+		white-space: nowrap;
+	}
+
+	@keyframes rotate-words {
+		0%,
+		18% {
+			transform: translateY(0);
+		}
+		25%,
+		43% {
+			transform: translateY(-1.2em);
+		}
+		50%,
+		68% {
+			transform: translateY(-2.4em);
+		}
+		75%,
+		93% {
+			transform: translateY(-3.6em);
+		}
+		100% {
+			transform: translateY(-4.8em);
+		}
+	}
+
+	@media (max-width: 640px) {
+		.rotating-hero {
+			flex-direction: column;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.rotating-text-track {
+			animation: none;
+		}
+
+		.rotating-text {
+			height: auto;
+			overflow: visible;
+		}
+
+		.rotating-text-track {
+			flex-direction: row;
+			flex-wrap: wrap;
+			gap: 0.35rem 0.75rem;
+			justify-content: center;
+		}
+
+		.rotating-text-word:last-child {
+			display: none;
+		}
+	}
+</style>

@@ -1,0 +1,33 @@
+---
+import Aprendiz from "../layouts/Aprendiz.astro";
+import ContactForm from "../components/ContactForm.astro";
+import FaqList from "../components/FaqList.astro";
+import { getLocaleFromAstro, getMessages } from "../i18n";
+
+const locale = getLocaleFromAstro(Astro.currentLocale, Astro.url.hostname);
+const m = getMessages(locale);
+---
+
+<Aprendiz title={m.contact.metaTitle}>
+	<section class="section">
+		<div class="container">
+			<div class="grid-2" style="align-items: start;">
+				<div>
+					<h1 class="heading-1">{m.contact.title}</h1>
+					<p class="muted">{m.contact.intro}</p>
+				</div>
+				<ContactForm messages={m} />
+			</div>
+		</div>
+	</section>
+
+	<section class="section section-alt">
+		<div class="container">
+			<h2 class="heading-2 text-center">{m.contact.faqTitle}</h2>
+			<p class="muted text-center">{m.contact.faqIntro}</p>
+			<div style="margin-top: 2rem;">
+				<FaqList items={m.contact.faqItems} />
+			</div>
+		</div>
+	</section>
+</Aprendiz>

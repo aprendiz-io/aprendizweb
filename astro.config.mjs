@@ -8,8 +8,20 @@ import { defineConfig, fontProviders } from "astro/config";
 import emdash from "emdash/astro";
 
 export default defineConfig({
+  site: "https://www.aprendiz.io",
   output: "server",
   adapter: cloudflare(),
+  i18n: {
+    defaultLocale: "es",
+    locales: ["es", "en"],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+    domains: {
+      es: "https://www.aprendiz.io",
+      en: "https://en.aprendiz.io",
+    },
+  },
   image: {
     layout: "constrained",
     responsiveStyles: true,
@@ -33,13 +45,6 @@ export default defineConfig({
       cssVariable: "--font-sans",
       weights: [400, 500, 600, 700],
       fallbacks: ["sans-serif"],
-    },
-    {
-      provider: fontProviders.google(),
-      name: "JetBrains Mono",
-      cssVariable: "--font-mono",
-      weights: [400, 500],
-      fallbacks: ["monospace"],
     },
   ],
   devToolbar: { enabled: false },

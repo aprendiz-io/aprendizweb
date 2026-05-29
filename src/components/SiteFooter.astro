@@ -1,0 +1,51 @@
+---
+import type { Messages } from "../i18n";
+
+interface Props {
+	messages: Messages;
+}
+
+const { messages } = Astro.props;
+const m = messages;
+---
+
+<footer class="site-footer">
+	<div class="container">
+		<div class="footer-grid">
+			<div>
+				<a href="/">
+					<img src="/images/aprendiz/logo.svg" alt="aprendiz" width="120" height="32" style="filter: brightness(0) invert(1);" />
+				</a>
+				<p class="footer-tagline">{m.footer.tagline}</p>
+				<div class="social-links">
+					<a href="https://www.linkedin.com/company/aprendizio/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+						<img src="/images/aprendiz/icon-linkedin.svg" alt="" width="16" height="16" />
+					</a>
+					<a href="https://www.instagram.com/aprendiz.io/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+						<img src="/images/aprendiz/icon-instagram.svg" alt="" width="16" height="16" />
+					</a>
+					<a href="mailto:aprendiz@bitlogic.io" aria-label="Email">
+						<img src="/images/aprendiz/icon-mail.svg" alt="" width="16" height="16" />
+					</a>
+				</div>
+			</div>
+			<div>
+				<p class="footer-col-title">{m.footer.resources}</p>
+				<div class="footer-links">
+					<a href="/blog">{m.nav.blog}</a>
+					<a href={m.paths.contact}>{m.nav.contact}</a>
+				</div>
+			</div>
+			<div>
+				<p class="footer-col-title">{m.footer.agreements}</p>
+				<div class="footer-links">
+					<a href={m.paths.privacy}>{m.footer.privacy}</a>
+					<a href={m.paths.terms}>{m.footer.terms}</a>
+				</div>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<p>{m.footer.copyright}</p>
+		</div>
+	</div>
+</footer>

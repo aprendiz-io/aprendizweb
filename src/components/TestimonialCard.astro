@@ -1,0 +1,38 @@
+---
+interface Props {
+	quote: string;
+	name: string;
+	role: string;
+	avatarSrc?: string;
+	avatarAlt?: string;
+}
+
+const {
+	quote,
+	name,
+	role,
+	avatarSrc = "/images/aprendiz/testimonial-unab.png",
+	avatarAlt = "UNAB",
+} = Astro.props;
+---
+
+<figure class="testimonial">
+	<blockquote>{quote}</blockquote>
+	<figcaption class="testimonial-author">
+		<img class="testimonial-avatar" src={avatarSrc} alt={avatarAlt} width="40" height="40" loading="lazy" />
+		<div class="testimonial-meta">
+			<cite>{name}</cite>
+			{
+				role.includes(" — ") ? (
+					<span class="testimonial-role">
+						{role.split(" — ").map((line) => (
+							<span>{line}</span>
+						))}
+					</span>
+				) : (
+					<span>{role}</span>
+				)
+			}
+		</div>
+	</figcaption>
+</figure>
