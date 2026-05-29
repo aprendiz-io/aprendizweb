@@ -1,0 +1,10 @@
+---
+/** Legacy EmDash default path → aprendiz uses /blog-posts/ (Webflow parity). */
+const { slug } = Astro.params;
+
+if (!slug) {
+	return Astro.redirect("/blog");
+}
+
+return Astro.redirect(`/blog-posts/${slug}`, 301);
+---

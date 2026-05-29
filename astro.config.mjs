@@ -4,7 +4,7 @@ import { d1, r2 } from "@emdash-cms/cloudflare";
 // import { d1, r2, sandbox } from "@emdash-cms/cloudflare"; // Workers Paid: sandboxed plugins
 import { formsPlugin } from "@emdash-cms/plugin-forms";
 import webhookNotifier from "@emdash-cms/plugin-webhook-notifier";
-import { defineConfig, fontProviders } from "astro/config";
+import { defineConfig } from "astro/config";
 import emdash from "emdash/astro";
 
 export default defineConfig({
@@ -37,15 +37,6 @@ export default defineConfig({
       // sandboxRunner: sandbox(),
       // marketplace: "https://marketplace.emdashcms.com",
     }),
-  ],
-  fonts: [
-    {
-      provider: fontProviders.google(),
-      name: "Inter",
-      cssVariable: "--font-sans",
-      weights: [400, 500, 600, 700],
-      fallbacks: ["sans-serif"],
-    },
   ],
   devToolbar: { enabled: false },
 });

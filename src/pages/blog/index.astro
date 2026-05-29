@@ -44,8 +44,7 @@ function categoryLabel(entryId: string): string {
 							href={`/blog-posts/${post.id}`}
 							category={categoryLabel(post.data.id)}
 							title={post.data.title}
-							imageSrc={post.data.featured_image?.src ?? "/images/aprendiz/blog-post-1.png"}
-							imageAlt={post.data.featured_image?.alt ?? post.data.title}
+							featuredImage={post.data.featured_image}
 							readMore={m.blog.readMore}
 						/>
 					))

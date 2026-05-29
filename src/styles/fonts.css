@@ -1,0 +1,33 @@
+/* Aeonik — brand typeface (from aprendiz Webflow) */
+
+@font-face {
+	font-family: Aeonik;
+	src: url("/fonts/aeonik/Aeonik-Regular.ttf") format("truetype");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: Aeonik;
+	src: url("/fonts/aeonik/Aeonik-Medium.ttf") format("truetype");
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: Aeonik;
+	src: url("/fonts/aeonik/Aeonik-Bold.ttf") format("truetype");
+	font-weight: 600;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: Aeonik;
+	src: url("/fonts/aeonik/Aeonik-Bold.ttf") format("truetype");
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}

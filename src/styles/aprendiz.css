@@ -11,8 +11,10 @@ html {
 body {
 	margin: 0;
 	font-family: var(--font-sans);
-	font-size: 1rem;
-	line-height: 1.6;
+	font-size: var(--font-body);
+	font-weight: 500;
+	line-height: var(--leading-body);
+	letter-spacing: 0;
 	color: var(--color-text);
 	background: var(--color-bg);
 	-webkit-font-smoothing: antialiased;
@@ -45,7 +47,7 @@ a {
 	color: var(--color-on-accent);
 	font-family: var(--font-sans);
 	font-weight: 600;
-	font-size: 0.9375rem;
+	font-size: var(--font-body-sm);
 	border: none;
 	cursor: pointer;
 	transition: background 0.2s ease;
@@ -72,34 +74,48 @@ a {
 }
 
 .heading-1 {
-	font-size: clamp(2rem, 4vw, 3rem);
-	font-weight: 700;
-	line-height: 1.15;
-	letter-spacing: -0.02em;
+	font-size: var(--font-h1);
+	font-weight: 600;
+	line-height: var(--leading-display);
+	letter-spacing: 0;
 	margin: 0 0 1rem;
 }
 
 .heading-2 {
-	font-size: clamp(1.5rem, 3vw, 2.25rem);
-	font-weight: 700;
-	line-height: 1.2;
+	font-size: var(--font-h2);
+	font-weight: 600;
+	line-height: var(--leading-heading);
+	letter-spacing: 0;
 	margin: 0 0 1rem;
 }
 
 .heading-3 {
-	font-size: 1.125rem;
+	font-size: var(--font-h3);
 	font-weight: 600;
+	line-height: var(--leading-heading);
+	letter-spacing: 0;
+	margin: 0 0 0.5rem;
+}
+
+.heading-4 {
+	font-size: var(--font-h4);
+	font-weight: 600;
+	line-height: var(--leading-h4);
+	letter-spacing: 0;
 	margin: 0 0 0.5rem;
 }
 
 .prose {
-	font-size: 1.0625rem;
-	line-height: 1.75;
+	font-size: var(--font-body);
+	font-weight: 500;
+	line-height: var(--leading-body);
 	color: var(--color-text);
 }
 
 .prose h2 {
-	font-size: 1.5rem;
+	font-size: var(--font-h3);
+	font-weight: 600;
+	line-height: var(--leading-heading);
 	margin-top: 2rem;
 }
 
@@ -235,6 +251,7 @@ a {
 }
 
 .feature-card .heading-3,
+.feature-card .heading-4,
 .feature-card .muted {
 	text-align: left;
 }
@@ -392,7 +409,7 @@ a {
 
 .blog-hero-words span {
 	font-size: clamp(1.75rem, 4vw, 2.5rem);
-	font-weight: 700;
+	font-weight: 600;
 	color: var(--color-accent);
 }
 
@@ -432,8 +449,9 @@ a {
 }
 
 .blog-card-title {
-	font-size: 1.125rem;
+	font-size: var(--font-h4);
 	font-weight: 600;
+	line-height: var(--leading-h4);
 	margin: 0 0 1rem;
 	flex: 1;
 }

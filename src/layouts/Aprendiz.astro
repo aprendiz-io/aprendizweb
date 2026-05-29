@@ -1,10 +1,10 @@
 ---
 import { EmDashHead, EmDashBodyStart, EmDashBodyEnd } from "emdash/ui";
 import { createPublicPageContext } from "emdash/page";
-import { Font } from "astro:assets";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import { getLocaleFromAstro, getMessages } from "../i18n";
+import "../styles/fonts.css";
 import "../styles/theme.css";
 import "../styles/aprendiz.css";
 
@@ -35,7 +35,6 @@ const pageCtx = createPublicPageContext({
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" href="/images/aprendiz/favicon.png" type="image/png" />
-		<Font cssVariable="--font-sans" preload />
 		<EmDashHead page={pageCtx} />
 		<title>{fullTitle}</title>
 		<meta name="description" content={metaDescription} />

@@ -1,8 +1,8 @@
 /* aprendiz brand tokens — extracted from Webflow published CSS */
 
 :root {
-	--color-bg: #f9f9f1;
-	--color-bg-subtle: #fdfdfb;
+	--color-bg: #fdfdfb;
+	--color-bg-subtle: #f9f9f1;
 	--color-surface: #ffffff;
 	--color-text: #0b0707;
 	--color-text-secondary: #575757;
@@ -13,7 +13,22 @@
 	--color-border: #e6e6e6;
 	--color-border-subtle: #f0f0eb;
 
-	--font-sans: "Inter", sans-serif;
+	--font-sans: "Aeonik", system-ui, sans-serif;
+
+	/* Typography scale — Aeonik style guide */
+	--font-display: clamp(2.75rem, 6vw, 5rem); /* 80px */
+	--font-h1: clamp(2.25rem, 5vw, 4rem); /* 64px */
+	--font-h2: clamp(1.75rem, 4vw, 3rem); /* 48px */
+	--font-h3: clamp(1.375rem, 3vw, 2rem); /* 32px */
+	--font-h4: clamp(1.125rem, 2vw, 1.5rem); /* 24px */
+	--font-body-lg: 1.25rem; /* 20px */
+	--font-body: 1.125rem; /* 18px — default */
+	--font-body-sm: 1rem; /* 16px */
+	--font-body-xs: 0.875rem; /* 14px */
+	--leading-display: 1.1;
+	--leading-heading: 1.2;
+	--leading-h4: 1.4;
+	--leading-body: 1.5;
 
 	--content-width: 720px;
 	--wide-width: 1140px;
