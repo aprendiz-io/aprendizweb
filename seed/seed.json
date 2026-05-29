@@ -68,30 +68,38 @@
 	],
 	"taxonomies": [
 		{
-			"id": "tax:category:es",
 			"name": "category",
 			"label": "Categorías",
 			"labelSingular": "Categoría",
 			"hierarchical": true,
 			"collections": ["posts"],
-			"locale": "es",
 			"terms": [
-				{ "slug": "educacion", "label": "Educación" },
-				{ "slug": "caso-de-exito", "label": "Caso de Éxito" }
-			]
-		},
-		{
-			"id": "tax:category:en",
-			"name": "category",
-			"label": "Categories",
-			"labelSingular": "Category",
-			"hierarchical": true,
-			"collections": ["posts"],
-			"locale": "en",
-			"translationOf": "tax:category:es",
-			"terms": [
-				{ "slug": "education", "label": "Education" },
-				{ "slug": "case-study", "label": "Case Study" }
+				{
+					"id": "term:educacion:es",
+					"slug": "educacion",
+					"label": "Educación",
+					"locale": "es"
+				},
+				{
+					"id": "term:education:en",
+					"slug": "education",
+					"label": "Education",
+					"locale": "en",
+					"translationOf": "term:educacion:es"
+				},
+				{
+					"id": "term:caso:es",
+					"slug": "caso-de-exito",
+					"label": "Caso de Éxito",
+					"locale": "es"
+				},
+				{
+					"id": "term:case:en",
+					"slug": "case-study",
+					"label": "Case Study",
+					"locale": "en",
+					"translationOf": "term:caso:es"
+				}
 			]
 		}
 	],
